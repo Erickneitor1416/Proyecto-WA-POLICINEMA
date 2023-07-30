@@ -1,1 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  background-color: #1b2a32;
+  font-family: "Roboto", sans-serif;
+}
+
+.slick-prev,
+.slick-next {
+  position: static;
+  height: 45px;
+  width: 40px;
+  background: #710036;
+  z-index: 100;
+  display: block;
+}
+.slick-prev::before,
+.slick-next::before {
+  color: #49253C ;
+}
+ .slick-next{
+    border-radius: 0px 5px 5px 0px;
+ }
+ .slick-prev{
+    border-radius: 5px 0px 0px 5px;
+ }
