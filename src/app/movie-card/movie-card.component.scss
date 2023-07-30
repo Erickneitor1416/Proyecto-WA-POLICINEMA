@@ -10,7 +10,7 @@
   place-content: center;
   height: 200px;
 }
-.card-text-title{
+.card-text-title {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,13 +19,12 @@
   font-size: medium;
   font-weight: bold;
   padding: 0.5rem;
-  color:#E9ECEF ;
-  
+  color: #e9ecef;
 }
-.card-text-movie{
+.card-text-movie {
   height: 80px;
   padding: 0.1rem 0.5rem;
-  color:#E9ECEF ;
+  color: #e9ecef;
 }
 .card-text-movie .card-text {
   display: -webkit-box;
@@ -33,21 +32,28 @@
   -webkit-line-clamp: 3;
   overflow: hidden;
   text-overflow: ellipsis;
-  color:#E9ECEF ;
+  color: #e9ecef;
 }
-.card-footer-movie{
+.card-footer-movie {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.2rem 0.5rem;
- 
 }
-.card-footer-movie button{
-  color:#E9ECEF ;
+.card-footer-movie button {
+  color: #e9ecef;
 }
 
-.flex{
+.flex {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.generic {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  color: #e9ecef;
 }
