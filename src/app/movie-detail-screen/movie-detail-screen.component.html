@@ -1,0 +1,32 @@
+<section *ngIf="movie"
+	class="container">
+	<div class="card-img-movie">
+		<img [src]="'https://image.tmdb.org/t/p/w1280' + movie.poster_path">
+	</div>
+
+	<div class="card-block card-text-movie">
+		<h1 class="card-title">{{ movie.title }}</h1>
+		<div class="card-text">
+			{{ movie.overview }}
+		</div>
+		<button class="btn btn-primary btn-show" routerLink="/">
+			<cds-icon shape="book" size="md"></cds-icon>
+			Ver reseñas
+		</button>
+	</div>
+	<div class="card-footer">
+		<p>GÉNEROS</p>
+		<div class="labels">
+			<ng-container *ngFor="let genre of movie.genres">
+				<span class="label label-info label-genre">{{ genre.name }}</span>
+			</ng-container>
+		</div>
+
+		<p>CAST</p>
+		<div class="labels">
+			<ng-container *ngFor="let credit of credits">
+				<span class="label label-info label-genre">{{ credit.name }}</span>
+			</ng-container>
+		</div>
+	</div>
+</section>

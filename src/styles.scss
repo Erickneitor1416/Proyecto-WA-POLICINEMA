@@ -12,13 +12,18 @@ body {
   z-index: 100;
   display: block;
 }
-.slick-prev::before,
-.slick-next::before {
-  color: #49253C ;
+.slick-prev:active,
+.slick-next:active {
+  background: #710036;
+  height: 45px;
+  width: 40px;
+  background: #710036;
+  z-index: 100;
+  display: block;
 }
- .slick-next{
-    border-radius: 0px 5px 5px 0px;
- }
- .slick-prev{
-    border-radius: 5px 0px 0px 5px;
- }
+.slick-next {
+  border-radius: 0px 5px 5px 0px;
+}
+.slick-prev {
+  border-radius: 5px 0px 0px 5px;
+}

@@ -1,14 +1,11 @@
 <div class="flex">
-  <a href="..." class="card clickable card-movie">
-    <div class="card-img card-img-movie">
-      <img [src]="'https://image.tmdb.org/t/p/w500' + nowMovie.poster_path" />
-    </div>
-    <h4 class="card-header card-text-title">{{ nowMovie.original_title }}</h4>
-    <div class="card-block card-text-movie">
-      <p class="card-text">{{ nowMovie.overview }}</p>
-    </div>
-    <div class="card-footer card-footer-movie">
-      <button class="btn btn-sm btn-link">Action 1</button>
-    </div>
-  </a>
+	<a href="..." class="card clickable card-movie" [routerLink]="['/movie-detail', nowMovie.id]">
+		<div class="card-img card-img-movie">
+			<img [src]="'https://image.tmdb.org/t/p/w500' + nowMovie.poster_path" />
+		</div>
+		<h4 class="card-header card-text-title">{{ nowMovie.original_title }}</h4>
+		<div class="card-block card-text-movie">
+			<p class="card-text">{{ nowMovie.overview }}</p>
+		</div>
+	</a>
 </div>
