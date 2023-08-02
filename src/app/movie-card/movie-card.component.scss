@@ -6,16 +6,16 @@
 
 .card-img-movie {
   overflow: hidden;
-  display: flex;
+  display: grid;
   place-content: center;
-  height: 200px;
+  height: 150px;
 }
 .card-text-title {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0.5rem;
-  height: 45px;
+  height: 5.5vh;
   font-size: medium;
   font-weight: bold;
   padding: 0.5rem;
@@ -50,10 +50,3 @@
   align-items: center;
 }
 
-.generic {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0.5rem;
-  color: #e9ecef;
-}
