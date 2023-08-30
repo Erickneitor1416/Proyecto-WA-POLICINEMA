@@ -9,7 +9,7 @@
 		<div class="card-text">
 			{{ movie.overview }}
 		</div>
-		<button class="btn btn-primary btn-show" routerLink="/">
+		<button class="btn btn-primary btn-show" [routerLink]="['/reviews', movie.id]">
 			<cds-icon shape="book" size="md"></cds-icon>
 			Ver reseñas
 		</button>

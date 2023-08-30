@@ -14,13 +14,22 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from './navbar/navbar.component';
-import { ClarityIcons, userIcon, homeIcon, bookIcon } from '@cds/core/icon';
+import { ClarityIcons, userIcon, homeIcon, bookIcon, starIcon, plusCircleIcon} from '@cds/core/icon';
 import { HomeScreenComponent } from './home-screen/home-screen.component';
 import { RouterModule } from '@angular/router';
 import { MovieDetailScreenComponent } from './movie-detail-screen/movie-detail-screen.component';
+import { ReviewsScreenComponent } from './reviews-screen/reviews-screen.component';
+import { ClrModal } from '@clr/angular';
+import { AddReviewBodyComponent } from './add-review-body/add-review-body.component';
+import { NgxStarsModule } from 'ngx-stars';
+
+
+
 ClarityIcons.addIcons(homeIcon);
 ClarityIcons.addIcons(bookIcon);
 ClarityIcons.addIcons(userIcon);
+ClarityIcons.addIcons(starIcon);
+ClarityIcons.addIcons(plusCircleIcon)
 registerLocaleData(en);
 @NgModule({
 	declarations: [
@@ -29,7 +38,9 @@ registerLocaleData(en);
 		MoviesCardListComponent,
 		NavbarComponent,
 		HomeScreenComponent,
-		MovieDetailScreenComponent
+		MovieDetailScreenComponent,
+ 		ReviewsScreenComponent,
+   AddReviewBodyComponent
 	],
 	imports: [
 		HttpClientModule,
@@ -39,11 +50,14 @@ registerLocaleData(en);
 		SlickCarouselModule,
 		FormsModule,
 		NzCardModule,
+		NgxStarsModule,
 		RouterModule.forRoot([
 			{ path: '', redirectTo: 'home', pathMatch: 'full' },
 			{ path: 'home', component: HomeScreenComponent },
-			{ path: 'movie-detail/:id', component: MovieDetailScreenComponent }
-		])
+			{ path: 'movie-detail/:id', component: MovieDetailScreenComponent },
+			{ path: 'reviews/:id', component:ReviewsScreenComponent }
+		]),
+		
 	],
 	providers: [{ provide: NZ_I18N, useValue: en_US }],
 	bootstrap: [AppComponent]
