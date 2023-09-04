@@ -2,6 +2,8 @@ import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@ang
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../services/movie.service';
 import { Movie } from '../Interfaces/Interfaces';
+import { Observable } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 
 @Component({
@@ -12,53 +14,51 @@ import { Movie } from '../Interfaces/Interfaces';
 export class ReviewsScreenComponent implements OnInit {
 
   movie: Movie;
+  movieId: number;
+  reviews: Observable<any[]>;
 
-  constructor(
-    private activeRoute: ActivatedRoute,
-		private movieService: MovieService,
-  ){
+ 
 
-  }
+constructor(
+  private activeRoute: ActivatedRoute,
+  private movieService: MovieService,
+  private firestore: AngularFirestore
+) {
 
-  ngOnInit(){
-    this.activeRoute.params.subscribe((params) => {
-			const id = params['id'];
-			if (id) {
-				this.movieService.getMovieById(id).subscribe((movie) => {
-					this.movie = movie;
-					console.log(this.movie, id);
-				});
-			}
-		});
 
-  }
-	
-  modalOpen = false;
-  
-  /*
-  stars = [1, 2, 3, 4, 5];
-  selectedRating = 5;
-  */
+}
 
-  //Modal para agregar comentario
-  openModal(): void {
-    this.modalOpen = true;
-  }
+ngOnInit() {
+  this.activeRoute.params.subscribe((params) => {
+    const id = params['id'];
+    if (id) {
+      this.movieService.getMovieById(id).subscribe((movie) => {
+        this.movie = movie;
+        this.movieId = movie.id;
+        console.log(this.movieId);
+      });
+    }
+  });
 
-  closeModal(): void {
-    this.modalOpen = false;
-  }
+  this.reviews = this.firestore.collection('movies', (ref) =>
+    ref.where('movieId', '==', this.movieId)
+  ).valueChanges();
+}
 
-  /*
-  @Output() ratingChanged = new EventEmitter<number>();
+modalOpen = false;
 
-  getStarShape(index: number): string {
-    return index < this.selectedRating ? 'star-solid' : 'star';
-  }
+/*
+stars = [1, 2, 3, 4, 5];
+selectedRating = 5;
+*/
 
-  setRating(rating: number): void {
-    this.selectedRating = rating;
-    this.ratingChanged.emit(rating);
-  }*/
+//Modal para agregar comentario
+openModal(): void {
+  this.modalOpen = true;
+}
+
+closeModal(): void {
+  this.modalOpen = false;
+}
 
 }

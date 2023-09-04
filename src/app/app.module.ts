@@ -22,7 +22,10 @@ import { ReviewsScreenComponent } from './reviews-screen/reviews-screen.componen
 import { ClrModal } from '@clr/angular';
 import { AddReviewBodyComponent } from './add-review-body/add-review-body.component';
 import { NgxStarsModule } from 'ngx-stars';
-
+import { environment } from 'src/environments/environment';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 
 ClarityIcons.addIcons(homeIcon);
@@ -51,6 +54,9 @@ registerLocaleData(en);
 		FormsModule,
 		NzCardModule,
 		NgxStarsModule,
+		AngularFireModule.initializeApp(environment.firebase),
+		AngularFireDatabaseModule,
+		AngularFirestoreModule,
 		RouterModule.forRoot([
 			{ path: '', redirectTo: 'home', pathMatch: 'full' },
 			{ path: 'home', component: HomeScreenComponent },

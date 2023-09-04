@@ -7,16 +7,17 @@
             <div class="rating card-text">
                 <div class="star-rating">
                     <!--<cds-icon *ngFor="let star of stars; let i = index" shape="star" size="xl" solid></cds-icon>-->
-                    <ngx-stars [readonly]="true" [maxStars]="5"  [color]="'#f0c54d'" [size]="3" [initialStars]="5"></ngx-stars>
+                    <ngx-stars [readonly]="true" [maxStars]="5" [color]="'#f0c54d'" [size]="3"
+                        [initialStars]="5"></ngx-stars>
                 </div>
                 <p>5</p>
                 <button class="btn btn-primary btn-show" (click)="openModal()">
-                    <cds-icon shape="plus-circle" size="m"  solid></cds-icon>
+                    <cds-icon shape="plus-circle" size="m" solid></cds-icon>
                     Agregar reseña
                 </button>
             </div>
             <!--Modal para comentarios-->
-            <clr-modal [(clrModalOpen)]="modalOpen" [clrModalSize]="'lg'" style="background-color: #1B2A32;">
+            <clr-modal [(clrModalOpen)]="modalOpen" [clrModalSize]="'lg'" class="modal-body">
                 <div class="modal-body">
                     <h5 class="card-title"> Añadir reseña para: {{movie.title}}</h5>
                     <app-add-review-body></app-add-review-body>
@@ -31,29 +32,32 @@
         <div class="reviews-section">
             <div class="card review-box">
                 <h4 class="card-title title">Review 1</h4>
-                <h5 class="card-title">John Doe   12/20/23</h5>
+                <h5 class="card-title">John Doe 12/20/23</h5>
                 <p class="card-description">Product description goes here.</p>
                 <div class="star-rating">
-                    <ngx-stars [readonly]="true" [maxStars]="5"  [color]="'#f0c54d'" [size]="1" [initialStars]="5"></ngx-stars>
+                    <ngx-stars [readonly]="true" [maxStars]="5" [color]="'#f0c54d'" [size]="1"
+                        [initialStars]="5"></ngx-stars>
                 </div>
             </div>
             <div class="card review-box">
                 <h4 class="card-title title">Review 1</h4>
-                <h5 class="card-title">John Doe   12/20/23</h5>
+                <h5 class="card-title">John Doe 12/20/23</h5>
                 <p class="card-description">Product description goes here.</p>
                 <div class="star-rating">
-                    <ngx-stars [readonly]="true" [maxStars]="5"  [color]="'#f0c54d'" [size]="1" [initialStars]="5"></ngx-stars>
+                    <ngx-stars [readonly]="true" [maxStars]="5" [color]="'#f0c54d'" [size]="1"
+                        [initialStars]="5"></ngx-stars>
                 </div>
             </div>
             <div class="card review-box">
                 <h4 class="card-title title">Product Name</h4>
-                <h5 class="card-title">John Doe   12/20/23</h5>
+                <h5 class="card-title">John Doe 12/20/23</h5>
                 <p class="card-description">Product description goes here.</p>
                 <div class="star-rating">
-                    <ngx-stars [readonly]="true" [maxStars]="5"  [color]="'#f0c54d'" [size]="1" [initialStars]="5"></ngx-stars>
+                    <ngx-stars [readonly]="true" [maxStars]="5" [color]="'#f0c54d'" [size]="1"
+                        [initialStars]="5"></ngx-stars>
                 </div>
             </div>
-        
+
         </div>
     </div>
 </section>
