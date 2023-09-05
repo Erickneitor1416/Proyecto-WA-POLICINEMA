@@ -27,7 +27,7 @@
     "@cds/core": "^6.6.1",
     "@clr/angular": "^15.11.0",
     "@clr/ui": "^15.11.0",
-    "firebase": "^10.3.1",
+    "firebase": "^10.0.0",
     "ng-zorro-antd": "^16.0.0",
     "ngx-slick-carousel": "^15.0.0",
     "ngx-stars": "^1.6.5",

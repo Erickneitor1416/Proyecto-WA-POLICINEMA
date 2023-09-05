@@ -1,5 +1,5 @@
 <section class="container clr-row">
-    <div class="clr-col-lg-5 clr-col-6">
+    <div class="clr-col-lg-5 clr-col-6 reviews">
         <div class="poster-score ">
             <div class="card-img-movie">
                 <img [src]="'https://image.tmdb.org/t/p/w1280' + movie.poster_path">
@@ -17,7 +17,7 @@
                 </button>
             </div>
             <!--Modal para comentarios-->
-            <clr-modal [(clrModalOpen)]="modalOpen" [clrModalSize]="'lg'" class="modal-body">
+            <clr-modal [(clrModalOpen)]="modalOpen" [clrModalSize]="'lg'" class="modal-body" [clrModalStaticBackdrop]="false">
                 <div class="modal-body">
                     <h5 class="card-title"> Añadir reseña para: {{movie.title}}</h5>
                     <app-add-review-body></app-add-review-body>
@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <div class="reviews clr-col-lg-6 clr-col-12">
+    <div class="clr-col-lg-6 clr-col-12">
         <h1 class="card-title header-1">{{movie.title}}</h1>
         <h2 class="card-title header-2">Reseñas de usuarios</h2>
         <div class="reviews-section">

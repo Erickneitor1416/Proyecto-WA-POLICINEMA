@@ -14,12 +14,18 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from './navbar/navbar.component';
-import { ClarityIcons, userIcon, homeIcon, bookIcon, starIcon, plusCircleIcon} from '@cds/core/icon';
+import {
+	ClarityIcons,
+	userIcon,
+	homeIcon,
+	bookIcon,
+	starIcon,
+	plusCircleIcon
+} from '@cds/core/icon';
 import { HomeScreenComponent } from './home-screen/home-screen.component';
 import { RouterModule } from '@angular/router';
 import { MovieDetailScreenComponent } from './movie-detail-screen/movie-detail-screen.component';
 import { ReviewsScreenComponent } from './reviews-screen/reviews-screen.component';
-import { ClrModal } from '@clr/angular';
 import { AddReviewBodyComponent } from './add-review-body/add-review-body.component';
 import { NgxStarsModule } from 'ngx-stars';
 import { environment } from 'src/environments/environment';
@@ -27,12 +33,11 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
-
 ClarityIcons.addIcons(homeIcon);
 ClarityIcons.addIcons(bookIcon);
 ClarityIcons.addIcons(userIcon);
 ClarityIcons.addIcons(starIcon);
-ClarityIcons.addIcons(plusCircleIcon)
+ClarityIcons.addIcons(plusCircleIcon);
 registerLocaleData(en);
 @NgModule({
 	declarations: [
@@ -42,8 +47,8 @@ registerLocaleData(en);
 		NavbarComponent,
 		HomeScreenComponent,
 		MovieDetailScreenComponent,
- 		ReviewsScreenComponent,
-   AddReviewBodyComponent
+		ReviewsScreenComponent,
+		AddReviewBodyComponent
 	],
 	imports: [
 		HttpClientModule,
@@ -61,9 +66,8 @@ registerLocaleData(en);
 			{ path: '', redirectTo: 'home', pathMatch: 'full' },
 			{ path: 'home', component: HomeScreenComponent },
 			{ path: 'movie-detail/:id', component: MovieDetailScreenComponent },
-			{ path: 'reviews/:id', component:ReviewsScreenComponent }
-		]),
-		
+			{ path: 'reviews/:id', component: ReviewsScreenComponent }
+		])
 	],
 	providers: [{ provide: NZ_I18N, useValue: en_US }],
 	bootstrap: [AppComponent]
