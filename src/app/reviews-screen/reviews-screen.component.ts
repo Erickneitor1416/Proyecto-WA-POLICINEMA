@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { MovieService } from '../services/movie.service';
-import { Movie } from '../Interfaces/Interfaces';
-import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Movie } from '../Interfaces/Interfaces';
+import { MovieService } from '../services/movie.service';
 
 @Component({
 	selector: 'app-reviews-screen',
@@ -13,7 +13,8 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 export class ReviewsScreenComponent implements OnInit {
 	movie: Movie;
 	movieId: number;
-	reviews: Observable<any[]>;
+	reviews: any[];
+	subscription: Subscription;
 
 	constructor(
 		private activeRoute: ActivatedRoute,
@@ -29,13 +30,15 @@ export class ReviewsScreenComponent implements OnInit {
 					this.movie = movie;
 					this.movieId = movie.id;
 					console.log(this.movieId);
+					this.subscription = this.firestore
+						.collection('reviews', (ref) => ref.where('movieId', '==', this.movieId))
+						.valueChanges()
+						.subscribe((reviews) => {
+							this.reviews = reviews;
+						});
 				});
 			}
 		});
-
-		this.reviews = this.firestore
-			.collection('movies', (ref) => ref.where('movieId', '==', this.movieId))
-			.valueChanges();
 	}
 
 	modalOpen = false;
