@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
@@ -32,6 +32,7 @@ import { MovieDetailScreenComponent } from './movie-detail-screen/movie-detail-s
 import { MoviesCardListComponent } from './movies-card-list/movies-card-list.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ReviewsScreenComponent } from './reviews-screen/reviews-screen.component';
+import { ProfileScreenComponent } from './profile-screen/profile-screen.component';
 
 ClarityIcons.addIcons(homeIcon);
 ClarityIcons.addIcons(bookIcon);
@@ -49,7 +50,8 @@ registerLocaleData(en);
 		MovieDetailScreenComponent,
 		ReviewsScreenComponent,
 		AddReviewBodyComponent,
-		LoginScreenComponent
+		LoginScreenComponent,
+		ProfileScreenComponent
 	],
 	imports: [
 		HttpClientModule,
@@ -57,9 +59,11 @@ registerLocaleData(en);
 		ClarityModule,
 		BrowserModule,
 		SlickCarouselModule,
+		ReactiveFormsModule,
 		FormsModule,
 		NzCardModule,
 		NgxStarsModule,
+		
 		AngularFireModule.initializeApp(environment.firebase),
 		AngularFireDatabaseModule,
 		AngularFirestoreModule,
@@ -68,7 +72,8 @@ registerLocaleData(en);
 			{ path: 'home', component: HomeScreenComponent },
 			{ path: 'movie-detail/:id', component: MovieDetailScreenComponent },
 			{ path: 'reviews/:id', component: ReviewsScreenComponent },
-			{ path: 'login', component: LoginScreenComponent }
+			{ path: 'login', component: LoginScreenComponent },
+			{ path: 'profile', component: ProfileScreenComponent }
 		])
 	],
 	providers: [{ provide: NZ_I18N, useValue: en_US }],
