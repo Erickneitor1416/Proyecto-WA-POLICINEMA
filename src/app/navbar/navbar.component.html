@@ -5,11 +5,12 @@
 	<h1 class="title">POLI-CINEMA</h1>
 	<div class="header-actions">
 		<a routerLink="/home" class="nav-link nav-icon-text" routerLinkActive="active"
-			><cds-icon shape="home" class="icon"></cds-icon><span class="nav-text icon-fix second-title">Home</span></a
+			><cds-icon shape="home" class="icon"></cds-icon
+			><span class="nav-text icon-fix second-title">Home</span></a
 		>
-		<a routerLink="/profile" class="nav-link nav-icon-text" routerLinkActive="active" >
+		<a routerLink="/profile" class="nav-link nav-icon-text" routerLinkActive="active">
 			<cds-icon shape="user"></cds-icon>
-			<span class="nav-text second-title">username</span>
+			<span class="nav-text second-title">{{ userName }}</span>
 		</a>
 	</div>
 </header>

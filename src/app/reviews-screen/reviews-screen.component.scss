@@ -1,0 +1,162 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+$--clr-modal-bg-color: #1b2a32;
+
+.container {
+	margin: 1.5rem;
+	background-color: #710036;
+	border-radius: 8px;
+	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+	display: inline-flex;
+	min-height: 47rem;
+	min-width: 80rem;
+	overflow: hidden;
+}
+
+.poster-score {
+	display: grid;
+	place-items: center;
+	gap: 1rem;
+}
+
+.card-img-movie {
+	overflow: hidden;
+	display: flex;
+	justify-content: left;
+	height: 30rem;
+	padding-top: 4rem;
+}
+
+.card-img-movie img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.rating {
+	display: grid;
+	place-items: center; /* Center both horizontally and vertically */
+	height: 0.5rem;
+}
+
+.rating p {
+	padding-bottom: 1.5rem;
+	color: #e9ecef;
+	font-size: 2.5rem;
+	font-weight: bold;
+	padding-top: 0.5rem;
+}
+
+.btn-show {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	align-self: center;
+}
+
+.modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.modal {
+	background-color: #22343c;
+	padding: 0.2rem;
+	border-radius: 4px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+///REVIEWS SECTION
+.reviews-section {
+	margin: auto;
+	padding-top: 1.5rem;
+}
+///Card
+/* card.component.css */
+.card {
+	padding: 20px;
+	border: 1px solid black;
+	background-color: #22343c;
+	border-radius: 4px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+	display: inline-block;
+	margin: 10px;
+	width: 100%;
+}
+
+.card-title {
+	color: #e9ecef;
+}
+
+.header-1 {
+	padding-top: 4.7rem;
+	font-size: 1.5rem;
+	padding-left: 0.4rem;
+	color: #e9ecef;
+}
+
+.header-2 {
+	font-size: 1.6rem;
+	padding-left: 0.4rem;
+	color: #e9ecef;
+	font-weight: bold;
+	margin: 0px;
+}
+
+.title {
+	font-size: 1.5rem;
+	color: #e9ecef;
+}
+
+.review-card-title {
+	font-size: 1rem;
+	color: #e9ecef;
+	font-weight: bold;
+	margin: 0px;
+}
+
+.card-description {
+	margin-bottom: 10px;
+	color: #e9ecef;
+}
+
+///STAR RATING
+/* star-rating.component.css */
+.star-rating {
+	font-size: 24px;
+}
+
+cds-icon {
+	cursor: pointer;
+	color: #f0c54d;
+}
+
+///REVIEW MODAL
+///
+.modal-content ng-tns-c2014857230-0 {
+	background-color: #1b2a32;
+}
+
+.modal-body {
+	background-color: #1b2a32;
+}
+
+.modal-content-wrapper {
+	background-color: #1b2a32;
+}
+
+.reviews {
+	margin-bottom: 4rem;
+}

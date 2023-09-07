@@ -1,0 +1,22 @@
+<form clrForm clrLayout="vertical" (ngSubmit)="saveRating()">
+	<h6 class="card-title">Fulano 20/20/2020</h6>
+	<ngx-stars (ratingOutput)="onRatingSet($event)" [maxStars]="5" [color]="'#f0c54d'"></ngx-stars>
+	<div class="clr-form-control">
+		<label>Textarea Label</label>
+		<clr-input-container>
+			<input clrInput placeholder="Título" name="input" [(ngModel)]="reviewTitle" />
+		</clr-input-container>
+		<clr-textarea-container>
+			<textarea
+				clrTextarea
+				placeholder="Ingrese su reseña"
+				class="review-textarea"
+				[(ngModel)]="feedback"
+				[ngModelOptions]="{ standalone: true }"
+			></textarea>
+		</clr-textarea-container>
+	</div>
+	<div class="container-center">
+		<button type="submit" class="btn btn-primary">Guardar</button>
+	</div>
+</form>

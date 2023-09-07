@@ -1,0 +1,38 @@
+form{
+    background-color: #1B2A32;
+}
+
+.container-center{
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+  text-align: center; 
+}
+.card-title{
+    color: #E9ECEF;
+}
+
+clr-textarea-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center; 
+}
+
+label {
+    display: none;
+
+}
+
+input{
+    color:#E9ECEF
+}
+
+textarea {
+    width: 100%;
+    max-width: 40rem;
+}
+
+clr-control-helper {
+    margin: 10px 0;
+}

@@ -34,9 +34,12 @@ export class HomeScreenComponent implements OnInit, OnDestroy {
 			.subscribe({ next: (data) => (this.topRatedMovies = data.results) });
 	}
 	ngOnDestroy(): void {
-		this.nowPlayingMoviesSubscriber.unsubscribe();
-		this.popularMoviesSubscriber.unsubscribe();
-		this.upcomingMoviesSubscriber.unsubscribe();
-		this.topRatedMoviesSubscriber.unsubscribe();
+		this.nowPlayingMoviesSubscriber && this.nowPlayingMoviesSubscriber.unsubscribe();
+
+		this.popularMoviesSubscriber && this.popularMoviesSubscriber.unsubscribe();
+
+		this.upcomingMoviesSubscriber && this.upcomingMoviesSubscriber.unsubscribe();
+
+		this.topRatedMoviesSubscriber && this.topRatedMoviesSubscriber.unsubscribe();
 	}
 }
