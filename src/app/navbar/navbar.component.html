@@ -3,13 +3,25 @@
 		<img src="../../assets/logo-removebg.png" />
 	</a>
 	<h1 class="title">POLI-CINEMA</h1>
-	<div class="header-actions">
+	<div class="header-actions" *ngIf="isLoggedIn">
 		<a routerLink="/home" class="nav-link nav-icon-text" routerLinkActive="active"
-			><cds-icon shape="home" class="icon"></cds-icon><span class="nav-text icon-fix second-title">Home</span></a
+			><cds-icon shape="home" class="icon"></cds-icon
+			><span class="nav-text icon-fix second-title">Home</span></a
 		>
-		<a routerLink="/profile" class="nav-link nav-icon-text" routerLinkActive="active" >
-			<cds-icon shape="user"></cds-icon>
-			<span class="nav-text second-title">username</span>
-		</a>
+		<div class="nav-link nav-icon-text">
+			<span class="nav-text second-title">{{ username }}</span>
+		</div>
+		<clr-dropdown [clrCloseMenuOnItemClick]="false">
+			<button clrDropdownTrigger>
+				<cds-icon shape="user" class="is-error" size="24"></cds-icon>
+				<cds-icon shape="angle" direction="down"></cds-icon>
+			</button>
+			<clr-dropdown-menu clrCloseMenuOnItemClick="true" *clrIfOpen clrPosition="bottom-right">
+				<label class="dropdown-header" aria-hidden="true">Perfil</label>
+				<div clrDropdownItem>Ver / Editar Perfil</div>
+				<div class="dropdown-divider" role="separator" aria-hidden="true"></div>
+				<div clrDropdownItem (click)="logout()">Cerrar sesión</div>
+			</clr-dropdown-menu>
+		</clr-dropdown>
 	</div>
 </header>

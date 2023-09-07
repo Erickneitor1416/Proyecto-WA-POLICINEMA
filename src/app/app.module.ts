@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
@@ -32,6 +32,8 @@ import { MovieDetailScreenComponent } from './movie-detail-screen/movie-detail-s
 import { MoviesCardListComponent } from './movies-card-list/movies-card-list.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ReviewsScreenComponent } from './reviews-screen/reviews-screen.component';
+import { RegisterScreenComponent } from './register-screen/register-screen.component';
+import { AuthGuard } from './guards/auth.guard';
 
 ClarityIcons.addIcons(homeIcon);
 ClarityIcons.addIcons(bookIcon);
@@ -49,7 +51,8 @@ registerLocaleData(en);
 		MovieDetailScreenComponent,
 		ReviewsScreenComponent,
 		AddReviewBodyComponent,
-		LoginScreenComponent
+		LoginScreenComponent,
+		RegisterScreenComponent
 	],
 	imports: [
 		HttpClientModule,
@@ -58,17 +61,19 @@ registerLocaleData(en);
 		BrowserModule,
 		SlickCarouselModule,
 		FormsModule,
+		ReactiveFormsModule,
 		NzCardModule,
 		NgxStarsModule,
 		AngularFireModule.initializeApp(environment.firebase),
 		AngularFireDatabaseModule,
 		AngularFirestoreModule,
 		RouterModule.forRoot([
-			{ path: '', redirectTo: 'home', pathMatch: 'full' },
-			{ path: 'home', component: HomeScreenComponent },
-			{ path: 'movie-detail/:id', component: MovieDetailScreenComponent },
-			{ path: 'reviews/:id', component: ReviewsScreenComponent },
-			{ path: 'login', component: LoginScreenComponent }
+			{ path: '', redirectTo: 'login', pathMatch: 'full' },
+			{ path: 'home', component: HomeScreenComponent, canActivate: [AuthGuard] },
+			{ path: 'movie-detail/:id', component: MovieDetailScreenComponent, canActivate: [AuthGuard] },
+			{ path: 'reviews/:id', component: ReviewsScreenComponent, canActivate: [AuthGuard] },
+			{ path: 'login', component: LoginScreenComponent },
+			{ path: 'register', component: RegisterScreenComponent }
 		])
 	],
 	providers: [{ provide: NZ_I18N, useValue: en_US }],
