@@ -34,6 +34,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ReviewsScreenComponent } from './reviews-screen/reviews-screen.component';
 import { RegisterScreenComponent } from './register-screen/register-screen.component';
 import { AuthGuard } from './guards/auth.guard';
+import { ProfileScreenComponent } from './profile-screen/profile-screen.component';
 
 ClarityIcons.addIcons(homeIcon);
 ClarityIcons.addIcons(bookIcon);
@@ -52,7 +53,8 @@ registerLocaleData(en);
 		ReviewsScreenComponent,
 		AddReviewBodyComponent,
 		LoginScreenComponent,
-		RegisterScreenComponent
+		RegisterScreenComponent,
+		ProfileScreenComponent
 	],
 	imports: [
 		HttpClientModule,
@@ -60,10 +62,12 @@ registerLocaleData(en);
 		ClarityModule,
 		BrowserModule,
 		SlickCarouselModule,
+		ReactiveFormsModule,
 		FormsModule,
 		ReactiveFormsModule,
 		NzCardModule,
 		NgxStarsModule,
+		
 		AngularFireModule.initializeApp(environment.firebase),
 		AngularFireDatabaseModule,
 		AngularFirestoreModule,

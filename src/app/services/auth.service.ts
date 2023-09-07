@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root'
@@ -80,13 +80,6 @@ export class AuthService {
 	}
 
 	get isLoggedIn(): boolean {
-		/* const observable = new Subject<boolean>();
-		if (this.userData) {
-			observable.next(this.userData !== null && this.userData.emailVerified !== false);
-		} else {
-			observable.next(false);
-		}
-		return observable; */
 		const user = JSON.parse(localStorage.getItem('user')!);
 		console.log('user: ', user);
 		return user !== null && user.emailVerified !== false;
