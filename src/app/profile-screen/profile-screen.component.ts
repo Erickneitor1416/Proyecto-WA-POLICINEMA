@@ -76,7 +76,7 @@ export class ProfileScreenComponent implements OnInit, OnDestroy {
 
 	onSubmitUser() {
 		if (this.updateForm.valid) {
-			const userId = localStorage.getItem('userId') || 'GvewXAdDwQa8ig7vh73837luls93';
+			const userId = localStorage.getItem('userId') || '';
 			this.fs
 				.updateUser(this.email, this.country, userId)
 				.then(() => {
@@ -96,8 +96,9 @@ export class ProfileScreenComponent implements OnInit, OnDestroy {
 		}
 	}
 	onSubmitPassword() {
+		//Llamar al servicio de actualizar contraseña
 		if (this.passwordForm.valid) {
-			const userId = localStorage.getItem('userId') || 'GvewXAdDwQa8ig7vh73837luls93';
+			const userId = localStorage.getItem('userId') || '';
 			console.log(userId);
 		}
 	}
