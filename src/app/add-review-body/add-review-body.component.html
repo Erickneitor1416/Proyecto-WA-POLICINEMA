@@ -1,22 +1,32 @@
-<form clrForm clrLayout="vertical" (ngSubmit)="saveRating()">
-	<h6 class="card-title">Fulano 20/20/2020</h6>
-	<ngx-stars (ratingOutput)="onRatingSet($event)" [maxStars]="5" [color]="'#f0c54d'"></ngx-stars>
-	<div class="clr-form-control">
-		<label>Textarea Label</label>
-		<clr-input-container>
-			<input clrInput placeholder="Título" name="input" [(ngModel)]="reviewTitle" />
-		</clr-input-container>
-		<clr-textarea-container>
-			<textarea
-				clrTextarea
-				placeholder="Ingrese su reseña"
-				class="review-textarea"
-				[(ngModel)]="feedback"
-				[ngModelOptions]="{ standalone: true }"
-			></textarea>
-		</clr-textarea-container>
+<form [formGroup]="form"  clrLayout="vertical" (ngSubmit)="saveRating()">
+	<div class="inputs-container">
+		<ngx-stars (ratingOutput)="onRatingSet($event)" [maxStars]="5" [color]="'#f0c54d'" [size]="1.5"></ngx-stars>
+		<div class="clr-form-control">
+			<label for="review-title" class="clr-control-label">Review Title</label>
+			<div class="clr-control-container">
+			  <div class="clr-input-wrapper" [ngClass]="{'clr-error': form.get('reviewTitle')?.invalid && form.get('reviewTitle')?.touched}">
+				<input type="text" id="review-title" placeholder="Review Title" name="input" class="clr-input" formControlName="reviewTitle" />
+				<cds-icon class="clr-validate-icon" shape="exclamation-circle"></cds-icon>
+			  </div>
+			  <span class="clr-subtext" *ngIf="errorFlag">Review title is empty</span>
+			</div>
+		</div>
+		<div class="clr-form-control">
+			<label for="vertical-textarea-basic" class="clr-control-label">Basic textarea</label>
+			<div class="clr-control-container">
+			  <div class="clr-textarea-wrapper" [ngClass]="{'clr-error': form.get('feedback')?.invalid && form.get('feedback')?.touched}">
+				<textarea id="vertical-textarea-basic" placeholder="Enter feedback here" class="clr-textarea" formControlName="feedback"></textarea>
+				<cds-icon class="clr-validate-icon" shape="exclamation-circle"></cds-icon>
+			  </div>
+			  <span class="clr-subtext" *ngIf="errorFlag">Your feedback is empty</span>
+			</div>
+		</div>
+	</div>
+		
+	<div class="progress loop" *ngIf="isSubmitting">
+		<progress></progress>
 	</div>
 	<div class="container-center">
-		<button type="submit" class="btn btn-primary">Guardar</button>
+		<button type="submit" class="btn btn-primary" [disabled]="isSubmitting">Guardar</button>
 	</div>
 </form>

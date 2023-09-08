@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../services/movie.service';
-import { Movie } from '../Interfaces/Interfaces';
-import { Observable } from 'rxjs';
+import { Movie, ReviewData } from '../Interfaces/Interfaces';
+import { Observable, Subscription } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
@@ -13,13 +13,16 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 export class ReviewsScreenComponent implements OnInit {
 	movie: Movie;
 	movieId: number;
-	reviews: Observable<any[]>;
+	reviews: ReviewData[] ;
+	suscription: Subscription;
+	initialStarsArray: number[] = [];
+	initialStarNumber:number;
 
 	constructor(
 		private activeRoute: ActivatedRoute,
 		private movieService: MovieService,
 		private firestore: AngularFirestore
-	) {}
+	) { }
 
 	ngOnInit() {
 		this.activeRoute.params.subscribe((params) => {
@@ -29,21 +32,32 @@ export class ReviewsScreenComponent implements OnInit {
 					this.movie = movie;
 					this.movieId = movie.id;
 					console.log(this.movieId);
+					this.getReviewsByMovieId(this.movieId)
 				});
 			}
 		});
+	}
 
-		this.reviews = this.firestore
-			.collection('movies', (ref) => ref.where('movieId', '==', this.movieId))
-			.valueChanges();
+	getReviewsByMovieId(movieId:number){
+		this.suscription = this.firestore
+		.collection<ReviewData>('reviews', (ref) => ref.where('movieId', '==', movieId).orderBy('date', 'desc'))
+		.valueChanges()
+		.subscribe((reviews:ReviewData[]) => {
+			this.reviews = reviews;
+			console.log(this.reviews)
+			this.initialStarsArray = reviews.map((review) => review.rating);
+			this.initialStarNumber = this.calculateAverage();
+			console.log(this.initialStarNumber);
+		});
+	}
+
+	calculateAverage(): number {
+		const sum = this.initialStarsArray.reduce((total, stars) => total + stars, 0);
+		const average = sum / this.initialStarsArray.length;
+		return parseFloat(average.toFixed(1));
 	}
 
 	modalOpen = false;
-
-	/*
-stars = [1, 2, 3, 4, 5];
-selectedRating = 5;
-*/
 
 	//Modal para agregar comentario
 	openModal(): void {
@@ -52,5 +66,10 @@ selectedRating = 5;
 
 	closeModal(): void {
 		this.modalOpen = false;
+	}
+
+	ngOnDestroy() {
+		// Unsubscribe when the component is destroyed
+		this.suscription.unsubscribe();
 	}
 }

@@ -12,7 +12,7 @@ import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { en_US } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from './navbar/navbar.component';
 import {
 	ClarityIcons,
@@ -55,6 +55,7 @@ registerLocaleData(en);
 		BrowserAnimationsModule,
 		ClarityModule,
 		BrowserModule,
+		ReactiveFormsModule,
 		SlickCarouselModule,
 		FormsModule,
 		NzCardModule,

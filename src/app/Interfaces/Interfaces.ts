@@ -26,3 +26,11 @@ export interface MovieData {
 	total_pages: number;
 	total_results: number;
 }
+
+export interface ReviewData {
+	movieId: number;
+	date: string;
+	rating: number;
+	reviewTitle: string;
+	feedback: string;
+}

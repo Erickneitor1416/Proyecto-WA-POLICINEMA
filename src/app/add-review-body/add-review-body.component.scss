@@ -1,11 +1,11 @@
 form{
-    background-color: #1B2A32;
+    background-color: #21333b;
 }
 
 .container-center{
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center horizontally */
+  align-items: center; 
   text-align: center; 
 }
 .card-title{
@@ -17,6 +17,10 @@ clr-textarea-container{
   flex-direction: column;
   align-items: center; 
   justify-content: center; 
+}
+
+form-group {
+    padding-top: 0rem;
 }
 
 label {
@@ -36,3 +40,30 @@ textarea {
 clr-control-helper {
     margin: 10px 0;
 }
+
+.inputs-container{
+    padding-top: 1.5rem;
+}
+
+.custom-textarea {
+    width: 100%; /* You can adjust the width as per your requirements */
+  }
+
+::ng-deep .clr-textarea {
+    width: 100%;
+}
+
+::ng-deep .clr-textarea-wrapper{
+    width: 100%;
+}
+
+::ng-deep .clr-control-container{
+    width: 100%;
+    padding-bottom: 0.5rem;
+}
+
+button{
+margin-top: 1rem;
+}
+
+
