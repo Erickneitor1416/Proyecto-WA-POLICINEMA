@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginData } from '../Interfaces/Interfaces';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'app-login-screen',
@@ -11,24 +11,30 @@ import { AuthService } from '../services/auth.service';
 export class LoginScreenComponent implements OnInit {
 	error: string = '';
 
-	form: LoginData;
-
 	loginForm: FormGroup;
+	isRegistered = false;
 
 	constructor(
 		private fb: FormBuilder,
-		private authService: AuthService
+		private authService: AuthService,
+		private router: ActivatedRoute
 	) {}
 
 	ngOnInit(): void {
-		/* this.form = {
-      email: '',
-      password: '',
-      rememberMe: false
-    }; */
+		if (
+			this.router.snapshot.queryParams.registered !== undefined &&
+			this.router.snapshot.queryParams.registered === 'true'
+		) {
+
+			this.isRegistered = true;
+			// eslint-disable-next-line angular/timeout-service
+			setTimeout(() => {
+				this.isRegistered = false;
+			}, 3000);
+		}
 		this.loginForm = this.fb.group({
 			email: ['', Validators.compose([Validators.required, Validators.email])],
-			password: ['', [Validators.required, Validators.minLength(7)]]
+			password: ['', [Validators.required, Validators.minLength(8)]]
 		});
 	}
 
@@ -38,6 +44,7 @@ export class LoginScreenComponent implements OnInit {
 				.loginWithEmail(this.loginFormControls.email.value, this.loginFormControls.password.value)
 				.catch((err) => {
 					this.error = 'Usuario/Contraseña incorrecta';
+					console.log(err);
 				});
 		}
 	}

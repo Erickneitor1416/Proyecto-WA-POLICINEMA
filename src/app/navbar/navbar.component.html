@@ -11,14 +11,14 @@
 		<div class="nav-link nav-icon-text">
 			<span class="nav-text second-title">{{ username }}</span>
 		</div>
-		<clr-dropdown [clrCloseMenuOnItemClick]="false">
+		<clr-dropdown>
 			<button clrDropdownTrigger>
 				<cds-icon shape="user" class="is-error" size="24"></cds-icon>
 				<cds-icon shape="angle" direction="down"></cds-icon>
 			</button>
 			<clr-dropdown-menu clrCloseMenuOnItemClick="true" *clrIfOpen clrPosition="bottom-right">
 				<label class="dropdown-header" aria-hidden="true">Perfil</label>
-				<div clrDropdownItem>Ver / Editar Perfil</div>
+				<div clrDropdownItem routerLink="/profile">Ver / Editar Perfil</div>
 				<div class="dropdown-divider" role="separator" aria-hidden="true"></div>
 				<div clrDropdownItem (click)="logout()">Cerrar sesión</div>
 			</clr-dropdown-menu>

@@ -18,8 +18,6 @@ export class AuthService {
 		public firestore: AngularFirestore
 	) {
 		this.authFire.authState.subscribe((user) => {
-			console.log('userData: ', JSON.stringify(user));
-
 			if (user) {
 				this.userData = user;
 				this.userSubject$.next(this.userData);
@@ -63,7 +61,7 @@ export class AuthService {
 					.then(() => {
 						this.storeUserData(user);
 						this.sendVerificationEmail();
-						this.route.navigate(['/login']);
+						this.route.navigate(['/login'], { queryParams: { registered: 'true' } });
 					});
 			} else {
 				return null;
@@ -81,7 +79,6 @@ export class AuthService {
 
 	get isLoggedIn(): boolean {
 		const user = JSON.parse(localStorage.getItem('user')!);
-		console.log('user: ', user);
 		return user !== null && user.emailVerified !== false;
 	}
 
@@ -92,6 +89,26 @@ export class AuthService {
 		});
 	}
 
+	updatePassword(oldPassword: string, newPassword: string, email: string) {
+		return this.authFire
+			.signInWithEmailAndPassword(email, oldPassword)
+			.then(() => {
+				// User is signed in, now we can update the password.
+				this.authFire.currentUser
+					.then((u: any) => u.updatePassword(newPassword))
+					.catch((error: any) => {
+						console.log(error);
+					});
+			})
+			.catch((error) => {
+				// Handle Errors here.
+				const errorCode = error.code;
+				const errorMessage = error.message;
+				console.log('Error code: ' + errorCode);
+				console.log('Error message: ' + errorMessage);
+				throw new Error(error);
+			});
+	}
 	storeUserData(user: any) {
 		this.firestore
 			.collection('users')

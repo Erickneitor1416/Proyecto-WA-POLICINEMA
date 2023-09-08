@@ -35,6 +35,7 @@ import { ReviewsScreenComponent } from './reviews-screen/reviews-screen.componen
 import { RegisterScreenComponent } from './register-screen/register-screen.component';
 import { AuthGuard } from './guards/auth.guard';
 import { ProfileScreenComponent } from './profile-screen/profile-screen.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 ClarityIcons.addIcons(homeIcon);
 ClarityIcons.addIcons(bookIcon);
@@ -54,7 +55,8 @@ registerLocaleData(en);
 		AddReviewBodyComponent,
 		LoginScreenComponent,
 		RegisterScreenComponent,
-		ProfileScreenComponent
+		ProfileScreenComponent,
+		PageNotFoundComponent
 	],
 	imports: [
 		HttpClientModule,
@@ -67,7 +69,7 @@ registerLocaleData(en);
 		ReactiveFormsModule,
 		NzCardModule,
 		NgxStarsModule,
-		
+
 		AngularFireModule.initializeApp(environment.firebase),
 		AngularFireDatabaseModule,
 		AngularFirestoreModule,
@@ -76,8 +78,10 @@ registerLocaleData(en);
 			{ path: 'home', component: HomeScreenComponent, canActivate: [AuthGuard] },
 			{ path: 'movie-detail/:id', component: MovieDetailScreenComponent, canActivate: [AuthGuard] },
 			{ path: 'reviews/:id', component: ReviewsScreenComponent, canActivate: [AuthGuard] },
+			{ path: 'profile', component: ProfileScreenComponent, canActivate: [AuthGuard] },
 			{ path: 'login', component: LoginScreenComponent },
-			{ path: 'register', component: RegisterScreenComponent }
+			{ path: 'register', component: RegisterScreenComponent },
+			{ path: '**', component: PageNotFoundComponent }
 		])
 	],
 	providers: [{ provide: NZ_I18N, useValue: en_US }],

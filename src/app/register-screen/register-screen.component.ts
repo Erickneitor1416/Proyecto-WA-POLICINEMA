@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -9,7 +9,6 @@ import { AuthService } from '../services/auth.service';
 })
 export class RegisterScreenComponent implements OnInit {
 	error: string | null;
-
 	registerForm: FormGroup;
 
 	constructor(
@@ -22,8 +21,26 @@ export class RegisterScreenComponent implements OnInit {
 			firstName: ['', Validators.required],
 			lastName: ['', Validators.required],
 			email: ['', Validators.compose([Validators.required, Validators.email])],
-			password: ['', [Validators.required, Validators.minLength(7)]]
+			password: ['', [Validators.required, Validators.minLength(8)]],
+			confirmPassword: ['', [Validators.required, Validators.minLength(8)]]
 		});
+		this.registerForm
+			.get('confirmPassword')
+			?.setValidators([
+				Validators.required,
+				Validators.minLength(8),
+				this.matchPassword.bind(this)
+			]);
+	}
+	matchPassword(control: FormControl): ValidationErrors | null {
+		const password = this.registerForm.get('password')?.value;
+		const confirmPassword = control.value;
+
+		if (password === confirmPassword) {
+			return null;
+		} else {
+			return { mismatch: true };
+		}
 	}
 
 	submit() {
@@ -35,7 +52,6 @@ export class RegisterScreenComponent implements OnInit {
 					this.registerFormControls.email.value,
 					this.registerFormControls.password.value
 				)
-				.then((result) => {})
 				.catch((err) => {
 					console.log('Error: ', err);
 					this.error = 'Error durante el registro';
