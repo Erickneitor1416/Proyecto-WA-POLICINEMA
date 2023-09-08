@@ -6,6 +6,7 @@ import { Movie } from '../Interfaces/Interfaces';
 import { ReviewsScreenComponent } from '../reviews-screen/reviews-screen.component';
 import { format } from 'date-fns';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
 
 
 @Component({
@@ -18,13 +19,10 @@ export class AddReviewBodyComponent implements OnInit {
   modalOpen = false;
   movie: Movie;
   movieId: number = 0;
-  //reviewTitle = '';
-  //feedback: string = ''
   rating: number = 0;
   showProgressBar = false;
   progress = 0;
-  errorFlag: boolean = false;
-  isSubmitting: boolean = false;
+  username: string;
 
 
   constructor(
@@ -32,7 +30,8 @@ export class AddReviewBodyComponent implements OnInit {
     private firestore: AngularFirestore,
     private activeRoute: ActivatedRoute,
     private movieService: MovieService,
-    private formbuilder: FormBuilder
+    private formbuilder: FormBuilder,
+    private authService: AuthService
   ) {
     this.form = this.formbuilder.group({
       reviewTitle: ['', Validators.required],
@@ -48,10 +47,15 @@ export class AddReviewBodyComponent implements OnInit {
           this.movie = movie;
           this.movieId = movie.id;
           console.log(this.movie, id);
+          this.authService.userSubject$.subscribe((user) => {
+            if (user) {
+              this.username = user.displayName;
+              console.log(this.username)
+            }
+          });
         });
       }
     });
-
   }
 
   onRatingSet(stars: number) {
@@ -68,6 +72,7 @@ export class AddReviewBodyComponent implements OnInit {
         movieId: this.movieId,
         date: currentDate,
         rating: this.rating,
+        username: this.username
       };
 
       this.firestore.collection('reviews').add(dataToSave)
@@ -76,7 +81,6 @@ export class AddReviewBodyComponent implements OnInit {
           console.log(dataToSave)
           // Reset values
           this.rating = 0;
-          this.errorFlag = false;
           this.reviewsScreen.closeModal();
           this.form.reset()
         })

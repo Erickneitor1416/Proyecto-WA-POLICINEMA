@@ -7,10 +7,11 @@
             <div class="rating card-text">
                 <div class="star-rating">
                     <!--<cds-icon *ngFor="let star of stars; let i = index" shape="star" size="xl" solid></cds-icon>-->
-                    <ngx-stars [readonly]="true" [maxStars]="5" [color]="'#f0c54d'" [size]="3"
-                        [initialStars]="initialStarNumber"></ngx-stars>
+                    <ngx-stars [readonly]="true" [maxStars]="1" [color]="'#f0c54d'" [size]="3"
+                        [initialStars]="1"></ngx-stars>
+                    <p> {{ initialStarsArray.length ? calculateAverage() : 'N/R' }}</p>
                 </div>
-                <p> {{ initialStarsArray.length ? calculateAverage() : 'N/R' }}</p>
+                
                 <button class="btn btn-primary btn-show" (click)="openModal()">
                     <cds-icon shape="plus-circle" size="m" solid></cds-icon>
                     Agregar reseña
@@ -32,7 +33,7 @@
         <div class="reviews-section" *ngFor="let review of reviews; let i = index">
             <div class="card review-box" *ngIf="review">
                 <h4 class="card-title title">{{review.reviewTitle}}</h4>
-                <h5 class="card-title">John Doe&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{review.date}}</h5>
+                <h5 class="card-title">{{username}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{review.date}}</h5>
                 <p class="card-description">{{review.feedback}}</p>
                 <div class="star-rating">
                     <ngx-stars [readonly]="true" [maxStars]="5" [color]="'#f0c54d'" [size]="1"

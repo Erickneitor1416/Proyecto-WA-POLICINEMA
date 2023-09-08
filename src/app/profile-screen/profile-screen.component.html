@@ -1,0 +1,110 @@
+<section class="section">
+	<clr-alert
+		[clrAlertType]="isSuccess || isPasswordSuccess ? 'success' : 'danger'"
+		[clrAlertClosed]="isClosed"
+	>
+		<clr-alert-item>
+			<span class="alert-text">
+				{{
+					isSuccess
+						? 'Se ha actualizado el perfil correctamente'
+						: isPasswordSuccess
+						? 'Se ha actualizado la contraseña correctamente'
+						: 'No se ha podido actualizar el perfil'
+				}}
+			</span>
+		</clr-alert-item>
+	</clr-alert>
+	<section class="profile">
+		<h1>Perfil de Usuario</h1>
+		<h2>General</h2>
+		<div class="flex">
+			<cds-icon shape="user" size="200"></cds-icon>
+			<form
+				[formGroup]="updateForm"
+				clrForm
+				(ngSubmit)="onSubmitUser()"
+				clrLayout="horizontal"
+				clrLabelSize="3"
+				class="form"
+			>
+				<clr-input-container>
+					<label>Email</label>
+					<input clrInput type="email" formControlName="email" />
+					<clr-control-error *clrIfError="'required'">Este campo es requerido</clr-control-error>
+					<clr-control-error *clrIfError="'email'">
+						Por favor ingrese un email valido
+					</clr-control-error>
+				</clr-input-container>
+				<clr-input-container>
+					<label>Country</label>
+					<input clrInput type="text" formControlName="country" />
+					<clr-control-error *clrIfError="'required'"> Este campo es requerido </clr-control-error>
+				</clr-input-container>
+				<div class="flexButton">
+					<button
+						class="btn btn-sm btn-primary"
+						(click)="obtenerPais()"
+						[disabled]="updateForm.controls.country.valid || onClickCountry"
+					>
+						Obtener país
+					</button>
+				</div>
+				<div class="flexButton">
+					<button type="submit" class="btn btn-primary" [disabled]="!updateForm.valid">
+						Guardar
+					</button>
+					<button type="button" class="btn" (click)="resetFormUser()">cancelar</button>
+				</div>
+			</form>
+		</div>
+		<div class="segurity">
+			<h2>Seguridad</h2>
+			<form
+				[formGroup]="passwordForm"
+				clrForm
+				(ngSubmit)="onSubmitPassword()"
+				clrLayout="horizontal"
+				clrLabelSize="6"
+				class="form"
+			>
+				<clr-password-container>
+					<label>Contraseña Actual</label>
+					<input clrPassword formControlName="oldPassword" />
+					<clr-control-error *clrIfError="'required'">Este campo es requerido</clr-control-error>
+					<clr-control-error *clrIfError="'minlength'; error as err"
+						>Coloque una contraseña de al menos
+						{{ err.requiredLength }} caracteres</clr-control-error
+					>
+				</clr-password-container>
+				<clr-password-container>
+					<label>Contraseña nueva</label>
+					<input clrPassword formControlName="newPassword" />
+					<clr-control-error *clrIfError="'required'">Este campo es requerido</clr-control-error>
+					<clr-control-error *clrIfError="'minlength'; error as err"
+						>Coloque una contraseña de al menos
+						{{ err.requiredLength }} caracteres</clr-control-error
+					>
+				</clr-password-container>
+				<clr-password-container>
+					<label>Contraseña nueva confirmación</label>
+					<input clrPassword formControlName="confirmPassword" />
+					<clr-control-error *clrIfError="'required'">Este campo es requerido</clr-control-error>
+					<clr-control-error *clrIfError="'minlength'; error as err"
+						>Coloque una contraseña de al menos
+						{{ err.requiredLength }} caracteres</clr-control-error
+					>
+					<clr-control-error *ngIf="passwordForm.controls.confirmPassword.errors?.['mismatch']"
+						>Las contraseñas no coinciden</clr-control-error
+					>
+				</clr-password-container>
+				<div class="flexButton">
+					<button type="submit" class="btn btn-primary" [disabled]="!passwordForm.valid">
+						Guardar
+					</button>
+					<button type="button" class="btn" (click)="resetFormPassword()">cancelar</button>
+				</div>
+			</form>
+		</div>
+	</section>
+</section>

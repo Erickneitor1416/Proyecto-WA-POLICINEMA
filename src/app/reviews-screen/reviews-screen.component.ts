@@ -4,6 +4,9 @@ import { MovieService } from '../services/movie.service';
 import { Movie, ReviewData } from '../Interfaces/Interfaces';
 import { Observable, Subscription } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AuthService } from '../services/auth.service';
+
+
 
 @Component({
 	selector: 'app-reviews-screen',
@@ -17,11 +20,13 @@ export class ReviewsScreenComponent implements OnInit {
 	suscription: Subscription;
 	initialStarsArray: number[] = [];
 	initialStarNumber:number;
+	username:string
 
 	constructor(
 		private activeRoute: ActivatedRoute,
 		private movieService: MovieService,
-		private firestore: AngularFirestore
+		private firestore: AngularFirestore,
+		private authService: AuthService
 	) { }
 
 	ngOnInit() {
@@ -33,6 +38,12 @@ export class ReviewsScreenComponent implements OnInit {
 					this.movieId = movie.id;
 					console.log(this.movieId);
 					this.getReviewsByMovieId(this.movieId)
+					this.authService.userSubject$.subscribe((user) => {
+						if (user) {
+						  this.username = user.displayName;
+						  console.log(this.username)
+						}
+					  });
 				});
 			}
 		});
