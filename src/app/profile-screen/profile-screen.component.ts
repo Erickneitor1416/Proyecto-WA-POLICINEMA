@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } fro
 import { Subscription } from 'rxjs';
 import { FirestoreUserService } from '../services/firestore-user.service';
 import { LocationService } from '../services/location.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
 	selector: 'app-profile-screen',
@@ -16,10 +17,12 @@ export class ProfileScreenComponent implements OnInit, OnDestroy {
 	isClosed = true;
 	onClickCountry = false;
 	isSuccess = false;
+	isPasswordSuccess = false;
 	constructor(
 		private fb: FormBuilder,
 		private fs: FirestoreUserService,
-		private ls: LocationService
+		private ls: LocationService,
+		private auth: AuthService
 	) {}
 	ngOnDestroy(): void {
 		this.locationSubscription && this.locationSubscription.unsubscribe();
@@ -76,29 +79,58 @@ export class ProfileScreenComponent implements OnInit, OnDestroy {
 
 	onSubmitUser() {
 		if (this.updateForm.valid) {
-			const userId = localStorage.getItem('userId') || 'GvewXAdDwQa8ig7vh73837luls93';
+			const user = localStorage.getItem('user') || '';
+			const userObject = JSON.parse(user);
+			const userId = userObject.uid;
 			this.fs
 				.updateUser(this.email, this.country, userId)
 				.then(() => {
 					this.isClosed = false;
-					this.isSuccess = true;
+					this.isPasswordSuccess = true;
 					// eslint-disable-next-line angular/timeout-service
 					setTimeout(() => {
 						this.isClosed = true;
-						this.isSuccess = false;
+						this.isPasswordSuccess = false;
 					}, 2000);
 				})
 				.catch((error: any) => {
-					console.log(error);
+					console.log(error, 'error');
 					this.isClosed = false;
 					this.isSuccess = false;
 				});
 		}
 	}
 	onSubmitPassword() {
+		const user = localStorage.getItem('user') || '';
+		const userObject = JSON.parse(user);
+		const userEmail = userObject.email;
+		console.log(userObject);
+
 		if (this.passwordForm.valid) {
-			const userId = localStorage.getItem('userId') || 'GvewXAdDwQa8ig7vh73837luls93';
-			console.log(userId);
+			this.auth
+				.updatePassword(
+					this.passwordForm.controls.oldPassword.value,
+					this.passwordForm.controls.newPassword.value,
+					userEmail
+				)
+				.then(() => {
+					this.isClosed = false;
+					this.isPasswordSuccess = true;
+					// eslint-disable-next-line angular/timeout-service
+					setTimeout(() => {
+						this.isClosed = true;
+						this.isPasswordSuccess = false;
+					}, 2000);
+				})
+				.catch((error: any) => {
+					console.log(error);
+					this.isClosed = false;
+					this.isPasswordSuccess = false;
+					// eslint-disable-next-line angular/timeout-service
+					setTimeout(() => {
+						this.isClosed = true;
+					}, 2000);
+				});
 		}
 	}
 

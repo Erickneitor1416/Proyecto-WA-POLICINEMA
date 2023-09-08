@@ -32,7 +32,10 @@ import { MovieDetailScreenComponent } from './movie-detail-screen/movie-detail-s
 import { MoviesCardListComponent } from './movies-card-list/movies-card-list.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ReviewsScreenComponent } from './reviews-screen/reviews-screen.component';
+import { RegisterScreenComponent } from './register-screen/register-screen.component';
+import { AuthGuard } from './guards/auth.guard';
 import { ProfileScreenComponent } from './profile-screen/profile-screen.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 ClarityIcons.addIcons(homeIcon);
 ClarityIcons.addIcons(bookIcon);
@@ -51,7 +54,9 @@ registerLocaleData(en);
 		ReviewsScreenComponent,
 		AddReviewBodyComponent,
 		LoginScreenComponent,
-		ProfileScreenComponent
+		RegisterScreenComponent,
+		ProfileScreenComponent,
+		PageNotFoundComponent
 	],
 	imports: [
 		HttpClientModule,
@@ -61,19 +66,22 @@ registerLocaleData(en);
 		SlickCarouselModule,
 		ReactiveFormsModule,
 		FormsModule,
+		ReactiveFormsModule,
 		NzCardModule,
 		NgxStarsModule,
-		
+
 		AngularFireModule.initializeApp(environment.firebase),
 		AngularFireDatabaseModule,
 		AngularFirestoreModule,
 		RouterModule.forRoot([
-			{ path: '', redirectTo: 'home', pathMatch: 'full' },
-			{ path: 'home', component: HomeScreenComponent },
-			{ path: 'movie-detail/:id', component: MovieDetailScreenComponent },
-			{ path: 'reviews/:id', component: ReviewsScreenComponent },
+			{ path: '', redirectTo: 'login', pathMatch: 'full' },
+			{ path: 'home', component: HomeScreenComponent, canActivate: [AuthGuard] },
+			{ path: 'movie-detail/:id', component: MovieDetailScreenComponent, canActivate: [AuthGuard] },
+			{ path: 'reviews/:id', component: ReviewsScreenComponent, canActivate: [AuthGuard] },
+			{ path: 'profile', component: ProfileScreenComponent, canActivate: [AuthGuard] },
 			{ path: 'login', component: LoginScreenComponent },
-			{ path: 'profile', component: ProfileScreenComponent }
+			{ path: 'register', component: RegisterScreenComponent },
+			{ path: '**', component: PageNotFoundComponent }
 		])
 	],
 	providers: [{ provide: NZ_I18N, useValue: en_US }],

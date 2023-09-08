@@ -1,10 +1,15 @@
 <section class="section">
-	<clr-alert [clrAlertType]="isSuccess ? 'success' : 'danger'" [clrAlertClosed]="isClosed">
+	<clr-alert
+		[clrAlertType]="isSuccess || isPasswordSuccess ? 'success' : 'danger'"
+		[clrAlertClosed]="isClosed"
+	>
 		<clr-alert-item>
 			<span class="alert-text">
 				{{
 					isSuccess
 						? 'Se ha actualizado el perfil correctamente'
+						: isPasswordSuccess
+						? 'Se ha actualizado la contraseña correctamente'
 						: 'No se ha podido actualizar el perfil'
 				}}
 			</span>
@@ -26,7 +31,7 @@
 				<clr-input-container>
 					<label>Email</label>
 					<input clrInput type="email" formControlName="email" />
-					<clr-control-error *clrIfError="'required'">This is a required field</clr-control-error>
+					<clr-control-error *clrIfError="'required'">Este campo es requerido</clr-control-error>
 					<clr-control-error *clrIfError="'email'">
 						Por favor ingrese un email valido
 					</clr-control-error>
@@ -66,7 +71,7 @@
 				<clr-password-container>
 					<label>Contraseña Actual</label>
 					<input clrPassword formControlName="oldPassword" />
-					<clr-control-error *clrIfError="'required'">This is a required field</clr-control-error>
+					<clr-control-error *clrIfError="'required'">Este campo es requerido</clr-control-error>
 					<clr-control-error *clrIfError="'minlength'; error as err"
 						>Coloque una contraseña de al menos
 						{{ err.requiredLength }} caracteres</clr-control-error
@@ -75,7 +80,7 @@
 				<clr-password-container>
 					<label>Contraseña nueva</label>
 					<input clrPassword formControlName="newPassword" />
-					<clr-control-error *clrIfError="'required'">This is a required field</clr-control-error>
+					<clr-control-error *clrIfError="'required'">Este campo es requerido</clr-control-error>
 					<clr-control-error *clrIfError="'minlength'; error as err"
 						>Coloque una contraseña de al menos
 						{{ err.requiredLength }} caracteres</clr-control-error
@@ -84,7 +89,7 @@
 				<clr-password-container>
 					<label>Contraseña nueva confirmación</label>
 					<input clrPassword formControlName="confirmPassword" />
-					<clr-control-error *clrIfError="'required'">This is a required field</clr-control-error>
+					<clr-control-error *clrIfError="'required'">Este campo es requerido</clr-control-error>
 					<clr-control-error *clrIfError="'minlength'; error as err"
 						>Coloque una contraseña de al menos
 						{{ err.requiredLength }} caracteres</clr-control-error
