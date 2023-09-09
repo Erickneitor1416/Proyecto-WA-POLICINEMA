@@ -25,7 +25,6 @@ export class LoginScreenComponent implements OnInit {
 			this.router.snapshot.queryParams.registered !== undefined &&
 			this.router.snapshot.queryParams.registered === 'true'
 		) {
-
 			this.isRegistered = true;
 			// eslint-disable-next-line angular/timeout-service
 			setTimeout(() => {
@@ -44,7 +43,10 @@ export class LoginScreenComponent implements OnInit {
 				.loginWithEmail(this.loginFormControls.email.value, this.loginFormControls.password.value)
 				.catch((err) => {
 					this.error = 'Usuario/Contraseña incorrecta';
-					console.log(err);
+					setTimeout(() => {
+						this.error = '';
+					}, 4000);
+					console.log('error: ', err);
 				});
 		}
 	}

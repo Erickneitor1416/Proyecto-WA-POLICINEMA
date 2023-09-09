@@ -8,89 +8,90 @@ import { format } from 'date-fns';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 
-
 @Component({
-  selector: 'app-add-review-body',
-  templateUrl: './add-review-body.component.html',
-  styleUrls: ['./add-review-body.component.scss']
+	selector: 'app-add-review-body',
+	templateUrl: './add-review-body.component.html',
+	styleUrls: ['./add-review-body.component.scss']
 })
 export class AddReviewBodyComponent implements OnInit {
-  form: FormGroup;
-  modalOpen = false;
-  movie: Movie;
-  movieId: number = 0;
-  rating: number = 0;
-  showProgressBar = false;
-  progress = 0;
-  username: string;
+	form: FormGroup;
+	modalOpen = false;
+	movie: Movie;
+	movieId: number = 0;
+	rating: number = 0;
+	showProgressBar = false;
+	progress = 0;
+	username: string | null = '';
 
+	constructor(
+		private reviewsScreen: ReviewsScreenComponent,
+		private firestore: AngularFirestore,
+		private activeRoute: ActivatedRoute,
+		private movieService: MovieService,
+		private formbuilder: FormBuilder,
+		private authService: AuthService
+	) {
+		this.form = this.formbuilder.group({
+			reviewTitle: ['', Validators.required],
+			feedback: ['', Validators.required]
+		});
+	}
 
-  constructor(
-    private reviewsScreen: ReviewsScreenComponent,
-    private firestore: AngularFirestore,
-    private activeRoute: ActivatedRoute,
-    private movieService: MovieService,
-    private formbuilder: FormBuilder,
-    private authService: AuthService
-  ) {
-    this.form = this.formbuilder.group({
-      reviewTitle: ['', Validators.required],
-      feedback: ['', Validators.required]
-    })
-  }
+	ngOnInit() {
+		this.username = JSON.parse(localStorage.getItem('user')!).displayName;
+		console.log(this.username);
 
-  ngOnInit() {
-    this.activeRoute.params.subscribe((params) => {
-      const id = params['id'];
-      if (id) {
-        this.movieService.getMovieById(id).subscribe((movie) => {
-          this.movie = movie;
-          this.movieId = movie.id;
-          console.log(this.movie, id);
-          this.authService.userSubject$.subscribe((user) => {
-            if (user) {
-              this.username = user.displayName;
-              console.log(this.username)
-            }
-          });
-        });
-      }
-    });
-  }
+		this.activeRoute.params.subscribe((params) => {
+			const id = params['id'];
+			if (id) {
+				this.movieService.getMovieById(id).subscribe((movie) => {
+					this.movie = movie;
+					this.movieId = movie.id;
+					console.log(this.movie, id);
+					this.authService.userSubject$.subscribe((user) => {
+						if (user) {
+							//this.username = user.displayName;
 
-  onRatingSet(stars: number) {
-    this.rating = stars;
-  }
+							console.log(this.username);
+						}
+					});
+				});
+			}
+		});
+	}
 
-  saveRating() {
-    if (this.form.valid) {
-  
-      const currentDate = format(new Date(), 'dd/MM/yyyy');
+	onRatingSet(stars: number) {
+		this.rating = stars;
+	}
 
-      const dataToSave = {
-        ...this.form.value,
-        movieId: this.movieId,
-        date: currentDate,
-        rating: this.rating,
-        username: this.username
-      };
+	saveRating() {
+		if (this.form.valid) {
+			const currentDate = format(new Date(), 'dd/MM/yyyy');
 
-      this.firestore.collection('reviews').add(dataToSave)
-        .then(() => {
-          console.log('Data saved to Firestore successfully.');
-          console.log(dataToSave)
-          // Reset values
-          this.rating = 0;
-          this.reviewsScreen.closeModal();
-          this.form.reset()
-        })
-        .catch(error => {
-          console.error('Error saving data to Firestore:', error);
-        });
-    }else{
-      console.error('One of the fields is empty');
-    }
+			const dataToSave = {
+				...this.form.value,
+				movieId: this.movieId,
+				date: currentDate,
+				rating: this.rating,
+				username: JSON.parse(localStorage.getItem('user')!).displayName
+			};
 
-  }
-
+			this.firestore
+				.collection('reviews')
+				.add(dataToSave)
+				.then(() => {
+					console.log('Data saved to Firestore successfully.');
+					console.log(dataToSave);
+					// Reset values
+					this.rating = 0;
+					this.reviewsScreen.closeModal();
+					this.form.reset();
+				})
+				.catch((error) => {
+					console.error('Error saving data to Firestore:', error);
+				});
+		} else {
+			console.error('One of the fields is empty');
+		}
+	}
 }

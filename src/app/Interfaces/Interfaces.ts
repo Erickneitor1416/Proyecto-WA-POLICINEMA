@@ -33,8 +33,9 @@ export interface ReviewData {
 	rating: number;
 	reviewTitle: string;
 	feedback: string;
+	username: string;
 }
-	
+
 export interface LoginData {
 	email: string;
 	password: string;

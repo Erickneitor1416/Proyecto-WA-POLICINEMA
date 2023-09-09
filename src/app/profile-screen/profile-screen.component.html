@@ -30,7 +30,13 @@
 			>
 				<clr-input-container>
 					<label>Email</label>
-					<input clrInput type="email" formControlName="email" />
+					<input
+						clrInput
+						type="email"
+						formControlName="email"
+						placeholder="{{ userData.email }}"
+						size="30"
+					/>
 					<clr-control-error *clrIfError="'required'">Este campo es requerido</clr-control-error>
 					<clr-control-error *clrIfError="'email'">
 						Por favor ingrese un email valido
@@ -38,7 +44,7 @@
 				</clr-input-container>
 				<clr-input-container>
 					<label>Country</label>
-					<input clrInput type="text" formControlName="country" />
+					<input clrInput type="text" formControlName="country" size="30" />
 					<clr-control-error *clrIfError="'required'"> Este campo es requerido </clr-control-error>
 				</clr-input-container>
 				<div class="flexButton">

@@ -43,7 +43,8 @@ export class AuthService {
 				}
 			})
 			.catch((error) => {
-				console.error('Login error:', error);
+				throw new Error(error);
+				//console.error('Login error:', error);
 			});
 	}
 

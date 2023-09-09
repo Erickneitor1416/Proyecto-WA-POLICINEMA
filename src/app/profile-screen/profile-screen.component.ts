@@ -18,6 +18,8 @@ export class ProfileScreenComponent implements OnInit, OnDestroy {
 	onClickCountry = false;
 	isSuccess = false;
 	isPasswordSuccess = false;
+	userData = JSON.parse(localStorage.getItem('user')!);
+
 	constructor(
 		private fb: FormBuilder,
 		private fs: FirestoreUserService,
