@@ -12,7 +12,7 @@
 						[maxStars]="5"
 						[color]="'#f0c54d'"
 						[size]="3"
-						[initialStars]="initialStarNumber"
+						[initialStars]="calculateAverage()"
 					></ngx-stars>
 					<p>{{ initialStarsArray.length ? calculateAverage() : 'N/R' }}</p>
 				</div>

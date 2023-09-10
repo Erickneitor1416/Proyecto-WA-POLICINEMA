@@ -1,71 +1,77 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ReviewsScreenComponent } from './reviews-screen.component';
 import { of } from 'rxjs';
-import { MovieService } from '../services/movie.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AuthService } from '../services/auth.service';
 
 fdescribe('ReviewsScreenComponent', () => {
 	let component: ReviewsScreenComponent;
 	let fixture: ComponentFixture<ReviewsScreenComponent>;
-	let firestore: AngularFirestore;
+  class AuthServiceMock {}
+	class AngularFireAuthMock {}
 
 	const mockActivatedRoute = {
-		params: of({ id: 240 })
+		params: of({ id: 248 })
 	};
 
-	const mockFirestore = {
-		collection: () => ({
-			valueChanges: () =>
-				of([
-					{
-						date: '08/09/2023',
-						movieId: 240,
-						reviewTitle: 'Masterpiece',
-						rating: 5,
-						feedback: 'No words needed'
-					}
-				])
-		})
-	};
+	const firestoreMock = {
+    collection: () => ({
+      valueChanges: () => {
+        return of([
+          {
+            date: '09/09/2023',
+            feedback: 'Interesting',
+            movieId: 238,
+            rating: 4,
+            reviewTitle: 'Nice',
+            username: 'nicolas barragan',
+          },
+        ]);
+      },
+    }),
+  };
 
-	beforeEach(() => {
-		TestBed.configureTestingModule({
+	beforeEach(async() => {
+		await TestBed.configureTestingModule({
 			imports: [HttpClientTestingModule],
 			declarations: [ReviewsScreenComponent],
 			providers: [
 				ReviewsScreenComponent,
-				{ provide: AngularFirestore, useValue: mockFirestore },
-				{ provide: ActivatedRoute, useValue: mockActivatedRoute }
+				{ provide: AngularFirestore, useValue: firestoreMock },
+				{ provide: ActivatedRoute, useValue: mockActivatedRoute },
+        { provide: AuthService, useClass: AuthServiceMock },
+        { provide: AngularFireAuth, useClass: AngularFireAuthMock }
 			]
-		});
-		//fixture = TestBed.createComponent(ReviewsScreenComponent);
-		//component = fixture.componentInstance;
-		//fixture.detectChanges();
-		component = TestBed.inject(ReviewsScreenComponent);
-		firestore = TestBed.inject(AngularFirestore);
+		}).compileComponents();
 	});
 
-	it('should fetch reviews data', () => {
-		const movieId = 240;
-		const spyValueChanges = spyOn(
-			firestore.collection('reviews') as any,
-			'valueChanges'
-		).and.callThrough();
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ReviewsScreenComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-		component.getReviewsByMovieId(movieId);
+	it('should fetch reviews data', fakeAsync(() => {
+    const movieId = 238;
 
-		expect(component.reviews).toEqual([
-			{
-				date: '08/09/2023',
-				movieId: 240,
-				reviewTitle: 'Masterpiece',
-				rating: 5,
-				feedback: 'No words needed',
-				username: 'Gandhy Garcia'
-			}
-		]);
-	});
+    component.getReviewsByMovieId(movieId);
+
+
+    tick();
+
+    expect(component.reviews).toEqual([
+      {
+        date: '09/09/2023',
+        feedback: 'Interesting',
+        movieId: 238,
+        rating: 4,
+        reviewTitle: 'Nice',
+        username: 'nicolas barragan',
+      },
+    ]);
+  }));
 });

@@ -35,6 +35,7 @@ export class ReviewsScreenComponent implements OnInit {
 			const id = params['id'];
 			if (id) {
 				this.getReviewsByMovieId(parseInt(id));
+				this.calculateAverage()
 				this.movieService.getMovieById(id).subscribe((movie) => {
 					this.movie = movie;
 					this.authService.userSubject$.subscribe((user) => {
@@ -55,15 +56,18 @@ export class ReviewsScreenComponent implements OnInit {
 			.valueChanges()
 			.subscribe((reviews: ReviewData[]) => {
 				this.reviews = reviews;
-				this.updateStarRating(reviews);
+				//this.updateStarRating(reviews);
 				console.log(reviews);
 			});
 	}
+
+	/*
 	updateStarRating(reviews: ReviewData[]) {
 		this.initialStarsArray = reviews.map((review) => review.rating);
 		this.initialStarNumber = this.calculateAverage();
 		this.starsComponent.setRating(this.calculateAverageForStars());
 	}
+	*/
 
 	calculateAverage(): number {
 		const sum = this.initialStarsArray.reduce((total, stars) => total + stars, 0);
