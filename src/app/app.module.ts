@@ -36,6 +36,7 @@ import { RegisterScreenComponent } from './register-screen/register-screen.compo
 import { AuthGuard } from './guards/auth.guard';
 import { ProfileScreenComponent } from './profile-screen/profile-screen.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 ClarityIcons.addIcons(homeIcon);
 ClarityIcons.addIcons(bookIcon);
@@ -70,7 +71,7 @@ registerLocaleData(en);
 		ReactiveFormsModule,
 		NzCardModule,
 		NgxStarsModule,
-
+		AngularFireAuthModule,
 		AngularFireModule.initializeApp(environment.firebase),
 		AngularFireDatabaseModule,
 		AngularFirestoreModule,

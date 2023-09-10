@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../services/movie.service';
 import { Movie, ReviewData } from '../Interfaces/Interfaces';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AuthService } from '../services/auth.service';
 import { NgxStarsComponent } from 'ngx-stars';
@@ -14,7 +14,6 @@ import { NgxStarsComponent } from 'ngx-stars';
 })
 export class ReviewsScreenComponent implements OnInit {
 	movie: Movie;
-	movieId: number;
 	reviews: ReviewData[];
 	suscription: Subscription;
 	initialStarsArray: number[] = [];
@@ -35,10 +34,9 @@ export class ReviewsScreenComponent implements OnInit {
 		this.activeRoute.params.subscribe((params) => {
 			const id = params['id'];
 			if (id) {
+				this.getReviewsByMovieId(parseInt(id));
 				this.movieService.getMovieById(id).subscribe((movie) => {
 					this.movie = movie;
-					this.movieId = movie.id;
-					this.getReviewsByMovieId(this.movieId);
 					this.authService.userSubject$.subscribe((user) => {
 						if (user) {
 							this.username = user.displayName;
@@ -57,10 +55,14 @@ export class ReviewsScreenComponent implements OnInit {
 			.valueChanges()
 			.subscribe((reviews: ReviewData[]) => {
 				this.reviews = reviews;
-				this.initialStarsArray = reviews.map((review) => review.rating);
-				this.initialStarNumber = this.calculateAverage();
-				this.starsComponent.setRating(this.calculateAverageForStars());
+				this.updateStarRating(reviews);
+				console.log(reviews);
 			});
+	}
+	updateStarRating(reviews: ReviewData[]) {
+		this.initialStarsArray = reviews.map((review) => review.rating);
+		this.initialStarNumber = this.calculateAverage();
+		this.starsComponent.setRating(this.calculateAverageForStars());
 	}
 
 	calculateAverage(): number {

@@ -1,4 +1,4 @@
-<section class="container clr-row">
+<section class="container clr-row" *ngIf="movie">
 	<div class="clr-col-lg-5 clr-col-md-6 clr-col-12 left-content">
 		<div class="poster-score">
 			<div class="card-img-movie">
@@ -6,7 +6,6 @@
 			</div>
 			<div class="rating card-text">
 				<div class="star-rating">
-					<!--<cds-icon *ngFor="let star of stars; let i = index" shape="star" size="xl" solid></cds-icon>-->
 					<ngx-stars
 						#starsComponent
 						[readonly]="true"
@@ -37,7 +36,7 @@
 		</div>
 	</div>
 
-	<div class="clr-col-lg-6 clr-col-md-6 clr-col-12 right-content">
+	<div class="clr-col-lg-6 clr-col-md-6 clr-col-12 right-content" *ngIf="reviews">
 		<h1 class="card-title header-1">{{ movie.title }}</h1>
 		<h2 class="card-title header-2">Reseñas de usuarios</h2>
 		<div class="reviews-section" *ngFor="let review of reviews; let i = index">

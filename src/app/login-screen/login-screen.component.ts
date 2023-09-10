@@ -43,6 +43,7 @@ export class LoginScreenComponent implements OnInit {
 				.loginWithEmail(this.loginFormControls.email.value, this.loginFormControls.password.value)
 				.catch((err) => {
 					this.error = 'Usuario/Contraseña incorrecta';
+					// eslint-disable-next-line angular/timeout-service
 					setTimeout(() => {
 						this.error = '';
 					}, 4000);

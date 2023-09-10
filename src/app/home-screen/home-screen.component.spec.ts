@@ -1,8 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { SlickCarouselComponent } from 'ngx-slick-carousel';
 import { of } from 'rxjs';
 import { Movie, MovieData } from '../Interfaces/Interfaces';
 import { MoviesCardListComponent } from '../movies-card-list/movies-card-list.component';
+import { AuthService } from '../services/auth.service';
 import { MovieService } from '../services/movie.service';
 import { HomeScreenComponent } from './home-screen.component';
 const movies: Movie[] = [
@@ -47,7 +49,12 @@ describe('HomeScreenComponent', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			declarations: [HomeScreenComponent, MoviesCardListComponent, SlickCarouselComponent],
-			providers: [{ provide: MovieService, useClass: MovieServiceMock }]
+			imports: [AngularFireAuthModule],
+			providers: [
+				{ provide: MovieService, useClass: MovieServiceMock },
+				{ provide: AuthService, useClass: AuthServiceMock },
+				{ provide: AngularFireAuth, useClass: AngularFireAuthMock }
+			]
 		});
 
 		fixture = TestBed.createComponent(HomeScreenComponent);
@@ -121,3 +128,5 @@ class MovieServiceMock {
 		return of({ results: movies } as MovieData);
 	}
 }
+class AuthServiceMock {}
+class AngularFireAuthMock {}

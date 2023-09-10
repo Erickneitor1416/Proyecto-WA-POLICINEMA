@@ -81,9 +81,7 @@ export class ProfileScreenComponent implements OnInit, OnDestroy {
 
 	onSubmitUser() {
 		if (this.updateForm.valid) {
-			const user = localStorage.getItem('user') || '';
-			const userObject = JSON.parse(user);
-			const userId = userObject.uid;
+			const userId = this.userData.uid;
 			this.fs
 				.updateUser(this.email, this.country, userId)
 				.then(() => {
@@ -103,11 +101,7 @@ export class ProfileScreenComponent implements OnInit, OnDestroy {
 		}
 	}
 	onSubmitPassword() {
-		const user = localStorage.getItem('user') || '';
-		const userObject = JSON.parse(user);
-		const userEmail = userObject.email;
-		console.log(userObject);
-
+		const userEmail = this.userData.email;
 		if (this.passwordForm.valid) {
 			this.auth
 				.updatePassword(

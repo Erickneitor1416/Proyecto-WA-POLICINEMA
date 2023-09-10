@@ -1,44 +1,42 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MovieService } from '../services/movie.service';
 import { Movie } from '../Interfaces/Interfaces';
-import { ClrModal } from '@clr/angular';
-import { ReviewsScreenComponent } from '../reviews-screen/reviews-screen.component';
+import { MovieService } from '../services/movie.service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-movie-detail-screen',
 	templateUrl: './movie-detail-screen.component.html',
 	styleUrls: ['./movie-detail-screen.component.scss']
 })
-export class MovieDetailScreenComponent implements OnInit {
-	
+export class MovieDetailScreenComponent implements OnInit, OnDestroy {
 	movie: Movie;
 	credits: any;
-
+	creditsSubscription: Subscription;
+	movieSubscription: Subscription;
 
 	constructor(
 		private activeRoute: ActivatedRoute,
-		private movieService: MovieService,
-	) { }
+		private movieService: MovieService
+	) {}
+	ngOnDestroy(): void {
+		this.movieSubscription.unsubscribe();
+		this.creditsSubscription.unsubscribe();
+	}
 
 	ngOnInit() {
 		this.activeRoute.params.subscribe((params) => {
 			const id = params['id'];
 			if (id) {
-				this.movieService.getMovieById(id).subscribe((movie) => {
+				this.movieSubscription = this.movieService.getMovieById(id).subscribe((movie) => {
 					this.movie = movie;
-					console.log(this.movie, id);
 				});
-				this.movieService.getCreditsByMovieId(id).subscribe((credits) => {
-					this.credits = credits.cast;
-				});
+				this.creditsSubscription = this.movieService
+					.getCreditsByMovieId(id)
+					.subscribe((credits) => {
+						this.credits = credits.cast;
+					});
 			}
 		});
 	}
-
-
-	
-
-
-
 }

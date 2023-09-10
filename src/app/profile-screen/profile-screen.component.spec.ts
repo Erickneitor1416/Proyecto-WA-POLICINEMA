@@ -5,6 +5,8 @@ import { LocationService } from '../services/location.service';
 import { FirestoreUserService } from '../services/firestore-user.service';
 import { of } from 'rxjs';
 import { ClarityModule } from '@clr/angular';
+import { AuthService } from '../services/auth.service';
+import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 fdescribe('ProfileScreenComponent', () => {
 	let component: ProfileScreenComponent;
@@ -15,10 +17,12 @@ fdescribe('ProfileScreenComponent', () => {
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
 			declarations: [ProfileScreenComponent],
-			imports: [ReactiveFormsModule, ClarityModule],
+			imports: [ReactiveFormsModule, ClarityModule, AngularFireAuthModule],
 			providers: [
 				{ provide: LocationService, useClass: LocationServiceMock },
-				{ provide: FirestoreUserService, useClass: FirestoreUserServiceMock }
+				{ provide: FirestoreUserService, useClass: FirestoreUserServiceMock },
+				{ provide: AuthService, useClass: AuthServiceMock },
+				{ provide: AngularFireAuth, useClass: AngularFireAuthMock }
 			]
 		}).compileComponents();
 	});
@@ -28,6 +32,10 @@ fdescribe('ProfileScreenComponent', () => {
 		component = fixture.componentInstance;
 		locationService = TestBed.inject(LocationService);
 		firestoreUserService = TestBed.inject(FirestoreUserService);
+		component.userData = {
+			email: 'test@example.com',
+			uid: 'GvewXAdDwQa8ig7vh73837luls93'
+		};
 		fixture.detectChanges();
 	});
 
@@ -75,4 +83,6 @@ fdescribe('ProfileScreenComponent', () => {
 			return Promise.resolve();
 		}
 	}
+	class AuthServiceMock {}
+	class AngularFireAuthMock {}
 });
