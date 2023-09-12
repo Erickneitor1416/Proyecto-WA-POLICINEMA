@@ -14,6 +14,7 @@ import { NgxStarsComponent } from 'ngx-stars';
 })
 export class ReviewsScreenComponent implements OnInit {
 	movie: Movie;
+	movieId: number;
 	reviews: ReviewData[];
 	suscription: Subscription;
 	initialStarsArray: number[] = [];
@@ -34,10 +35,10 @@ export class ReviewsScreenComponent implements OnInit {
 		this.activeRoute.params.subscribe((params) => {
 			const id = params['id'];
 			if (id) {
-				this.getReviewsByMovieId(parseInt(id));
-				this.calculateAverage()
 				this.movieService.getMovieById(id).subscribe((movie) => {
 					this.movie = movie;
+					this.movieId = movie.id;
+					this.getReviewsByMovieId(this.movieId);
 					this.authService.userSubject$.subscribe((user) => {
 						if (user) {
 							this.username = user.displayName;
@@ -56,18 +57,11 @@ export class ReviewsScreenComponent implements OnInit {
 			.valueChanges()
 			.subscribe((reviews: ReviewData[]) => {
 				this.reviews = reviews;
-				//this.updateStarRating(reviews);
-				console.log(reviews);
+				this.initialStarsArray = reviews.map((review) => review.rating);
+				this.initialStarNumber = this.calculateAverage();
+				this.starsComponent.setRating(this.calculateAverageForStars());
 			});
 	}
-
-	/*
-	updateStarRating(reviews: ReviewData[]) {
-		this.initialStarsArray = reviews.map((review) => review.rating);
-		this.initialStarNumber = this.calculateAverage();
-		this.starsComponent.setRating(this.calculateAverageForStars());
-	}
-	*/
 
 	calculateAverage(): number {
 		const sum = this.initialStarsArray.reduce((total, stars) => total + stars, 0);
