@@ -9,16 +9,16 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AuthService } from '../services/auth.service';
 
 fdescribe('ReviewsScreenComponent', () => {
-	let component: ReviewsScreenComponent;
-	let fixture: ComponentFixture<ReviewsScreenComponent>;
-  class AuthServiceMock {}
-	class AngularFireAuthMock {}
+  let component: ReviewsScreenComponent;
+  let fixture: ComponentFixture<ReviewsScreenComponent>;
+  class AuthServiceMock { }
+  class AngularFireAuthMock { }
 
-	const mockActivatedRoute = {
-		params: of({ id: 248 })
-	};
+  const mockActivatedRoute = {
+    params: of({ id: 248 })
+  };
 
-	const firestoreMock = {
+  const firestoreMock = {
     collection: () => ({
       valueChanges: () => {
         return of([
@@ -35,19 +35,19 @@ fdescribe('ReviewsScreenComponent', () => {
     }),
   };
 
-	beforeEach(async() => {
-		await TestBed.configureTestingModule({
-			imports: [HttpClientTestingModule],
-			declarations: [ReviewsScreenComponent],
-			providers: [
-				ReviewsScreenComponent,
-				{ provide: AngularFirestore, useValue: firestoreMock },
-				{ provide: ActivatedRoute, useValue: mockActivatedRoute },
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      declarations: [ReviewsScreenComponent],
+      providers: [
+        ReviewsScreenComponent,
+        { provide: AngularFirestore, useValue: firestoreMock },
+        { provide: ActivatedRoute, useValue: mockActivatedRoute },
         { provide: AuthService, useClass: AuthServiceMock },
         { provide: AngularFireAuth, useClass: AngularFireAuthMock }
-			]
-		}).compileComponents();
-	});
+      ]
+    }).compileComponents();
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ReviewsScreenComponent);
@@ -55,7 +55,7 @@ fdescribe('ReviewsScreenComponent', () => {
     fixture.detectChanges();
   });
 
-	it('should fetch reviews data', fakeAsync(() => {
+  it('should fetch reviews data', fakeAsync(() => {
     const movieId = 238;
 
     component.getReviewsByMovieId(movieId);
