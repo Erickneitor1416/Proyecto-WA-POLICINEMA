@@ -86,11 +86,11 @@ export class ProfileScreenComponent implements OnInit, OnDestroy {
 				.updateUser(this.email, this.country, userId)
 				.then(() => {
 					this.isClosed = false;
-					this.isPasswordSuccess = true;
+					this.isSuccess = true;
 					// eslint-disable-next-line angular/timeout-service
 					setTimeout(() => {
 						this.isClosed = true;
-						this.isPasswordSuccess = false;
+						this.isSuccess = false;
 					}, 2000);
 				})
 				.catch((error: any) => {
